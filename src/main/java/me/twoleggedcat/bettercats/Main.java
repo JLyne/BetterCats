@@ -29,8 +29,6 @@ public class Main extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
-        // bStats
-        new Metrics(this, 11499);
     }
 
     @Override
