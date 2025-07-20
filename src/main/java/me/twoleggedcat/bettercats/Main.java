@@ -56,9 +56,9 @@ public class Main extends JavaPlugin implements Listener {
                         return;
                     cat.lookAt(inv.getLocation());
                     cat.getWorld().playSound(cat.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1, 1);
-                    inv.removeItem(new ItemStack(Material.SALMON, 1));
+                    inv.removeItem(ItemStack.of(Material.SALMON));
                     Item salmon = (Item) cat.getWorld().spawnEntity(cat.getLocation().add(cat.getLocation().getDirection()), EntityType.ITEM);
-                    salmon.setItemStack(new ItemStack(Material.SALMON));
+                    salmon.setItemStack(ItemStack.of(Material.SALMON));
                 }
             }
         }
