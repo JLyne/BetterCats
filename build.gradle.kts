@@ -1,6 +1,3 @@
-import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
-import net.minecrell.pluginyml.paper.PaperPluginDescription
-
 plugins {
     java
     alias(libs.plugins.pluginYmlPaper)

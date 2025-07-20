@@ -16,8 +16,8 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CatPlayWithItemGoal implements Goal<Cat> {
-    private final GoalKey<Cat> key;
+public class CatPlayWithItemGoal implements Goal<@NotNull Cat> {
+    private final GoalKey<@NotNull Cat> key;
     private final Cat cat;
     private final Material targetType;
     private Item targetItem;
@@ -67,7 +67,7 @@ public class CatPlayWithItemGoal implements Goal<Cat> {
     }
 
     @Override
-    public @NotNull GoalKey<Cat> getKey() {
+    public @NotNull GoalKey<@NotNull Cat> getKey() {
         return key;
     }
 
@@ -79,7 +79,7 @@ public class CatPlayWithItemGoal implements Goal<Cat> {
     private Item getNearbyTargetItem() {
         Collection<Item> items = cat.getWorld().getNearbyEntitiesByType(Item.class, cat.getLocation(), 10, 5, 10,
                 item -> item.getItemStack().getType() == targetType);
-        if (items.size() == 0)
+        if (items.isEmpty())
             return null;
         int rand = randomInt(0, items.size());
         int i = 0;
