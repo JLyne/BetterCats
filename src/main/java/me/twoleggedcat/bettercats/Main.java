@@ -3,7 +3,6 @@ package me.twoleggedcat.bettercats;
 import com.destroystokyo.paper.event.entity.EntityAddToWorldEvent;
 import me.twoleggedcat.bettercats.ai.CatPlayWithItemGoal;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Cat;
 import org.bukkit.entity.Entity;
@@ -15,7 +14,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -23,6 +22,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
 
+@SuppressWarnings("UnstableApiUsage")
 public class Main extends JavaPlugin implements Listener {
     public final HashMap<UUID, Integer> purrTimes = new HashMap<>();
 
@@ -40,15 +40,15 @@ public class Main extends JavaPlugin implements Listener {
     public void onEntityLoad(EntityAddToWorldEvent e) {
         if (e.getEntityType() == EntityType.CAT) {
             Cat cat = (Cat) e.getEntity();
-            Bukkit.getMobGoals().addGoal(cat, 8, new CatPlayWithItemGoal(this, cat, Material.SALMON));
-            Bukkit.getMobGoals().addGoal(cat, 8, new CatPlayWithItemGoal(this, cat, Material.STRING));
+            Bukkit.getMobGoals().addGoal(cat, 8, new CatPlayWithItemGoal(this, cat, ItemType.SALMON));
+            Bukkit.getMobGoals().addGoal(cat, 8, new CatPlayWithItemGoal(this, cat, ItemType.STRING));
         }
     }
 
-    @EventHandler
+	@EventHandler
     public void onInventoryOpen(InventoryOpenEvent e) {
         Inventory inv = e.getInventory();
-        if (inv.getType() == InventoryType.CHEST && inv.contains(Material.SALMON)) {
+        if (inv.getType() == InventoryType.CHEST && inv.contains(ItemType.SALMON.asMaterial())) {
             Collection<Entity> entities = e.getPlayer().getWorld().getNearbyEntities(e.getPlayer().getLocation(), 10, 10, 10);
             for (Entity entity : entities) {
                 if (entity instanceof Cat cat && Math.random() < 0.15) {
@@ -56,9 +56,9 @@ public class Main extends JavaPlugin implements Listener {
                         return;
                     cat.lookAt(inv.getLocation());
                     cat.getWorld().playSound(cat.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1, 1);
-                    inv.removeItem(ItemStack.of(Material.SALMON));
+                    inv.removeItem(ItemType.SALMON.createItemStack());
                     Item salmon = (Item) cat.getWorld().spawnEntity(cat.getLocation().add(cat.getLocation().getDirection()), EntityType.ITEM);
-                    salmon.setItemStack(ItemStack.of(Material.SALMON));
+                    salmon.setItemStack(ItemType.SALMON.createItemStack());
                 }
             }
         }

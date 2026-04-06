@@ -3,11 +3,11 @@ package me.twoleggedcat.bettercats.ai;
 import com.destroystokyo.paper.entity.ai.Goal;
 import com.destroystokyo.paper.entity.ai.GoalKey;
 import com.destroystokyo.paper.entity.ai.GoalType;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Cat;
 import org.bukkit.entity.Item;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
@@ -19,11 +19,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class CatPlayWithItemGoal implements Goal<@NotNull Cat> {
     private final GoalKey<@NotNull Cat> key;
     private final Cat cat;
-    private final Material targetType;
+    private final ItemType targetType;
     private Item targetItem;
     private int ticksPlayed;
 
-    public CatPlayWithItemGoal(Plugin plugin, Cat cat, Material targetType) {
+    public CatPlayWithItemGoal(Plugin plugin, Cat cat, ItemType targetType) {
         this.key = GoalKey.of(Cat.class, new NamespacedKey(plugin, "play_with_item"));
         this.cat = cat;
         this.targetType = targetType;
@@ -78,7 +78,7 @@ public class CatPlayWithItemGoal implements Goal<@NotNull Cat> {
 
     private Item getNearbyTargetItem() {
         Collection<Item> items = cat.getWorld().getNearbyEntitiesByType(Item.class, cat.getLocation(), 10, 5, 10,
-                item -> item.getItemStack().getType() == targetType);
+                item -> item.getItemStack().getType().asItemType() == targetType);
         if (items.isEmpty())
             return null;
         int rand = randomInt(0, items.size());

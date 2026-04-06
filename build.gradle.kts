@@ -25,7 +25,7 @@ dependencies {
 
 paper {
     main = "me.twoleggedcat.bettercats.Main"
-    apiVersion = libs.versions.paperApi.get().replace(Regex("\\-R\\d.\\d-SNAPSHOT"), "")
+    apiVersion = libs.versions.paperApi.get().replace(".build.+", "")
     authors = listOf("Jim (AnEnragedPigeon)", "TwoLeggedCat")
     description = "Cat behaviour enhancements"
 }
